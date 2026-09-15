@@ -1,0 +1,61 @@
+﻿name: sidewallet
+description: SideWallet - Smart Financial Wallet App
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.4
+  cloud_firestore: ^5.2.1
+
+  # Biometric Auth
+  local_auth: ^2.3.0
+
+  # Navigation
+  go_router: ^14.2.7
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  # Charts
+  fl_chart: ^0.68.0
+
+  # Local Storage
+  hive_flutter: ^1.1.0
+
+  # Widget (iOS/Android)
+  home_widget: ^0.6.0
+
+  # UI & Fonts
+  google_fonts: ^6.2.1
+  shimmer: ^3.0.0
+  lottie: ^3.1.2
+
+  # Utilities
+  intl: ^0.19.0
+  uuid: ^4.4.2
+  shared_preferences: ^2.3.2
+  path_provider: ^2.1.4
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.12
+  riverpod_generator: ^2.4.3
+  hive_generator: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
