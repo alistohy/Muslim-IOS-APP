@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'transaction_provider.dart';
-import '../../shared/models/transaction_model.dart';
+import 'package:sidewallet/features/transactions/transaction_provider.dart';
+import 'package:sidewallet/shared/models/transaction_model.dart';
 
 // --- Filter Enum -------------------------------------------------------------
 enum _Filter { all, income, expense, thisMonth, lastMonth }
@@ -73,7 +73,7 @@ class _TransactionHistoryScreenState
   }
 
   // -- Filter + search logic -------------------------------------------------
-  List<TransactionModel> _applyFilters(List<TransactionModel> all) {
+  List<Transaction> _applyFilters(List<Transaction> all) {
     final now   = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
 
@@ -102,11 +102,11 @@ class _TransactionHistoryScreenState
   }
 
   // -- Group by date ---------------------------------------------------------
-  Map<String, List<TransactionModel>> _groupByDate(List<TransactionModel> list) {
+  Map<String, List<Transaction>> _groupByDate(List<Transaction> list) {
     final now   = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final yest  = today.subtract(const Duration(days: 1));
-    final groups = <String, List<TransactionModel>>{};
+    final groups = <String, List<Transaction>>{};
 
     for (final t in list) {
       final d   = DateTime(t.date.year, t.date.month, t.date.day);
@@ -152,16 +152,10 @@ class _TransactionHistoryScreenState
               ],
             ),
           ),
-          Expanded(
-            child: txAsync.when(
-              loading: () => const Center(
-                child: CircularProgressIndicator(color: _cyan, strokeWidth: 2),
-              ),
-              error: (e, _) => Center(
-                child: Text('Error: $e',
-                    style: const TextStyle(color: _error)),
-              ),
-              data: (all) {
+                    Expanded(
+            child: Builder(
+              builder: (context) {
+                final all = txAsync;
                 final filtered = _applyFilters(all);
                 if (filtered.isEmpty) return _buildEmptyState();
                 final grouped = _groupByDate(filtered);
@@ -252,8 +246,8 @@ class _TransactionHistoryScreenState
 
   // -- Grouped List ----------------------------------------------------------
   Widget _buildGroupedList(
-      Map<String, List<TransactionModel>> groups,
-      List<TransactionModel> allTx) {
+      Map<String, List<Transaction>> groups,
+      List<Transaction> allTx) {
     final sections = groups.entries.toList();
 
     return ListView.builder(
@@ -303,7 +297,7 @@ class _TransactionHistoryScreenState
 
   // -- Transaction Tile with Swipe-to-Dismiss --------------------------------
   Widget _buildTransactionTile(
-      TransactionModel t, List<TransactionModel> allTx) {
+      Transaction t, List<Transaction> allTx) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Dismissible(

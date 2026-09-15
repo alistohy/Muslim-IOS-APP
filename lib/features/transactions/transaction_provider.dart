@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import '../../shared/models/transaction_model.dart';
+import 'package:sidewallet/shared/models/transaction_model.dart';
 
 // -----------------------------------------------------------------------------
 // Box name constant
@@ -15,7 +15,7 @@ const String transactionBoxName = 'transactions';
 
 /// Provides the open [Box<Transaction>].
 /// The box **must** be opened (e.g. via [Hive.openBox]) before this provider
-/// is first read — typically done in [main] during app initialisation.
+/// is first read ï¿½ typically done in [main] during app initialisation.
 final transactionBoxProvider = Provider<Box<Transaction>>((ref) {
   return Hive.box<Transaction>(transactionBoxName);
 });

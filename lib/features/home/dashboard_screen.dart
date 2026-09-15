@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../shared/widgets/circuit_background.dart';
+import 'package:sidewallet/shared/widgets/circuit_background.dart';
 import 'package:intl/intl.dart';
 
 // --- Demo data models --------------------------------------------------------
@@ -381,7 +381,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   child: Text(
                     _balanceVisible
                         ? _formatCurrency(_totalBalance)
-                        : 'EGP ••••••',
+                        : 'EGP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
                     key: ValueKey(_balanceVisible),
                     style: const TextStyle(
                       color: Colors.white,

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // ---------------------------------------------------------------------------
@@ -40,7 +40,7 @@ class AppColors {
 class AppTheme {
   AppTheme._();
 
-  // ── helpers ──────────────────────────────────────────────────────────────
+  // -- helpers --------------------------------------------------------------
 
   static TextTheme _buildTextTheme(TextTheme base, Color bodyColor, Color headingColor) {
     TextStyle _exo(TextStyle s, Color c) {
@@ -70,7 +70,7 @@ class AppTheme {
     );
   }
 
-  // ── Dark Theme ────────────────────────────────────────────────────────────
+  // -- Dark Theme ------------------------------------------------------------
 
   static ThemeData get darkTheme {
     const colorScheme = ColorScheme.dark(
@@ -114,7 +114,7 @@ class AppTheme {
       ),
 
       // Card
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color:        AppColors.darkCard,
         elevation:    0,
         shape: RoundedRectangleBorder(
@@ -235,7 +235,7 @@ class AppTheme {
     );
   }
 
-  // ── Light Theme ───────────────────────────────────────────────────────────
+  // -- Light Theme -----------------------------------------------------------
 
   static ThemeData get lightTheme {
     const colorScheme = ColorScheme.light(
@@ -276,7 +276,7 @@ class AppTheme {
         ),
       ),
 
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color:     AppColors.lightCard,
         elevation: 2,
         shadowColor: Colors.black12,

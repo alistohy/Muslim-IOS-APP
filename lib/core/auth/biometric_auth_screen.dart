@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
-import '../../shared/widgets/circuit_background.dart';
+import 'package:sidewallet/shared/widgets/circuit_background.dart';
 
 class BiometricAuthScreen extends ConsumerStatefulWidget {
   const BiometricAuthScreen({super.key});
@@ -24,7 +24,7 @@ class _BiometricAuthScreenState extends ConsumerState<BiometricAuthScreen>
   // PIN state
   final List<String> _pinDigits = [];
   static const int _pinLength = 4;
-  // Simple demo PIN – in production this would be stored securely
+  // Simple demo PIN ï¿½ in production this would be stored securely
   static const String _correctPin = '1234';
 
   late AnimationController _pulseController;

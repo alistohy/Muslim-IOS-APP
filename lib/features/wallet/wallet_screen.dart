@@ -1,14 +1,14 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../../core/theme/app_theme.dart';
-import '../../shared/models/wallet_model.dart';
-import '../../shared/models/transaction_model.dart';
-import '../../shared/widgets/circuit_background.dart';
-import '../transactions/transaction_provider.dart';
-import 'wallet_provider.dart';
+import 'package:sidewallet/core/theme/app_theme.dart';
+import 'package:sidewallet/shared/models/wallet_model.dart';
+import 'package:sidewallet/shared/models/transaction_model.dart';
+import 'package:sidewallet/shared/widgets/circuit_background.dart';
+import 'package:sidewallet/features/transactions/transaction_provider.dart';
+import 'package:sidewallet/features/wallet/wallet_provider.dart';
 
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({super.key});

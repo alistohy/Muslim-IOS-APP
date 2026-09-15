@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../features/transactions/transaction_provider.dart';
-import '../../shared/models/transaction_model.dart';
+import 'package:sidewallet/features/transactions/transaction_provider.dart';
+import 'package:sidewallet/shared/models/transaction_model.dart';
 
 // -- Period enum ---------------------------------------------------------------
 enum _Period { week, month, year }
@@ -54,7 +54,7 @@ class ChartsScreen extends ConsumerWidget {
             _PeriodSelector(period: period, ref: ref),
             const SizedBox(height: 20),
             _SummaryCards(transactions: filtered),
-            const SizedBox(height, 20),
+            const SizedBox(height: 20),
             _sectionTitle('Spending by Category'),
             const SizedBox(height: 12),
             _DonutChart(transactions: filtered),
@@ -83,8 +83,8 @@ class ChartsScreen extends ConsumerWidget {
         ),
       );
 
-  List<TransactionModel> _filterByPeriod(
-      List<TransactionModel> txs, _Period period) {
+  List<Transaction> _filterByPeriod(
+      List<Transaction> txs, _Period period) {
     final now = DateTime.now();
     return txs.where((t) {
       final diff = now.difference(t.date);
@@ -175,13 +175,13 @@ class _PeriodTab extends StatelessWidget {
 
 // -- Summary Cards -------------------------------------------------------------
 class _SummaryCards extends StatelessWidget {
-  final List<TransactionModel> transactions;
+  final List<Transaction> transactions;
   const _SummaryCards({required this.transactions});
 
   @override
   Widget build(BuildContext context) {
     final expenses =
-        transactions.where((t) => t.type == TransactionType.expense);
+        transactions.where((t) => !t.isIncome);
     final totalSpent =
         expenses.fold<double>(0, (s, t) => s + t.amount);
     final days = _uniqueDays(expenses.toList());
@@ -222,7 +222,7 @@ class _SummaryCards extends StatelessWidget {
     );
   }
 
-  int _uniqueDays(List<TransactionModel> txs) {
+  int _uniqueDays(List<Transaction> txs) {
     final set = <String>{};
     for (final t in txs) {
       set.add('${t.date.year}-${t.date.month}-${t.date.day}');
@@ -279,7 +279,7 @@ class _SummaryCard extends StatelessWidget {
 
 // -- Donut Chart ---------------------------------------------------------------
 class _DonutChart extends StatefulWidget {
-  final List<TransactionModel> transactions;
+  final List<Transaction> transactions;
   const _DonutChart({required this.transactions});
 
   @override
@@ -293,7 +293,7 @@ class _DonutChartState extends State<_DonutChart> {
   Widget build(BuildContext context) {
     final byCategory = <String, double>{};
     for (final t in widget.transactions
-        .where((t) => t.type == TransactionType.expense)) {
+        .where((t) => !t.isIncome)) {
       byCategory[t.category] = (byCategory[t.category] ?? 0) + t.amount;
     }
 
@@ -392,7 +392,7 @@ class _DonutChartState extends State<_DonutChart> {
 
 // -- Income vs Expense Bar Chart -----------------------------------------------
 class _IncomeExpenseBar extends StatelessWidget {
-  final List<TransactionModel> transactions;
+  final List<Transaction> transactions;
   final _Period period;
   const _IncomeExpenseBar(
       {required this.transactions, required this.period});
@@ -493,7 +493,7 @@ class _IncomeExpenseBar extends StatelessWidget {
     for (final t in transactions) {
       final key = _bucketKey(t.date);
       buckets[key] ??= {'income': 0, 'expense': 0};
-      if (t.type == TransactionType.income) {
+      if (t.isIncome) {
         buckets[key]!['income'] = buckets[key]!['income']! + t.amount;
       } else {
         buckets[key]!['expense'] = buckets[key]!['expense']! + t.amount;
@@ -553,14 +553,14 @@ class _IncomeExpenseBar extends StatelessWidget {
 
 // -- Monthly Line Chart --------------------------------------------------------
 class _MonthlyLineChart extends StatelessWidget {
-  final List<TransactionModel> transactions;
+  final List<Transaction> transactions;
   const _MonthlyLineChart({required this.transactions});
 
   @override
   Widget build(BuildContext context) {
     final byMonth = <int, double>{};
     for (final t in transactions
-        .where((t) => t.type == TransactionType.expense)) {
+        .where((t) => !t.isIncome)) {
       final m = t.date.month;
       byMonth[m] = (byMonth[m] ?? 0) + t.amount;
     }

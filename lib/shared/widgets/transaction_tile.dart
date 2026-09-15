@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/transaction_model.dart';
+import 'package:sidewallet/shared/models/transaction_model.dart';
 
 // -- Category meta -------------------------------------------------------------
 class _CatMeta {
@@ -28,7 +28,7 @@ const _catMeta = <String, _CatMeta>{
 /// TransactionTile(transaction: tx, onTap: () { ... })
 /// ```
 class TransactionTile extends StatelessWidget {
-  final TransactionModel transaction;
+  final Transaction transaction;
   final VoidCallback? onTap;
   final VoidCallback? onLongPress;
 
@@ -43,7 +43,7 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final meta = _catMeta[transaction.category] ??
         const _CatMeta('??', Color(0xFF9E9E9E));
-    final isIncome = transaction.type == TransactionType.income;
+    final isIncome = transaction.isIncome;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
@@ -110,7 +110,7 @@ class TransactionTile extends StatelessWidget {
                 _AmountBadge(
                   amount: transaction.amount,
                   isIncome: isIncome,
-                  currency: transaction.currency,
+                  currency: 'EGP',
                 ),
               ],
             ),

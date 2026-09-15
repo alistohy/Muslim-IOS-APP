@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/theme/theme_provider.dart';
-import '../settings/settings_providers.dart';
-import '../settings/settings_providers.dart';
-import '../settings/settings_providers.dart';
-import '../transactions/transaction_provider.dart';
+import 'package:sidewallet/core/theme/theme_provider.dart';
+import 'package:sidewallet/features/settings/settings_providers.dart';
+import 'package:sidewallet/features/settings/settings_providers.dart';
+import 'package:sidewallet/features/settings/settings_providers.dart';
+import 'package:sidewallet/features/transactions/transaction_provider.dart';
 
 // -----------------------------------------------------------------------------
 class SettingsScreen extends ConsumerWidget {
@@ -13,7 +13,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = ref.watch(themeProvider) == ThemeMode.dark;
+    final isDark = ref.watch(themeModeProvider) == ThemeMode.dark;
     final currency = ref.watch(currencyProvider);
     final biometric = ref.watch(biometricProvider);
     final budgetAlerts = ref.watch(budgetAlertsProvider);
@@ -51,7 +51,7 @@ class SettingsScreen extends ConsumerWidget {
                   value: isDark,
                   activeColor: const Color(0xFF00E5FF),
                   onChanged: (val) {
-                    ref.read(themeProvider.notifier).setTheme(
+                    ref.read(themeModeProvider.notifier).setMode(
                         val ? ThemeMode.dark : ThemeMode.light);
                   },
                 ),
@@ -98,7 +98,7 @@ class SettingsScreen extends ConsumerWidget {
                   value: biometric,
                   activeColor: const Color(0xFF00E5FF),
                   onChanged: (val) {
-                    ref.read(biometricProvider.notifier).setBiometric(val);
+                    ref.read(biometricProvider.notifier).toggle();
                   },
                 ),
               ),
@@ -131,7 +131,7 @@ class SettingsScreen extends ConsumerWidget {
                   onChanged: (val) {
                     ref
                         .read(budgetAlertsProvider.notifier)
-                        .setBudgetAlerts(val);
+                        .toggle();
                   },
                 ),
               ),
@@ -146,7 +146,7 @@ class SettingsScreen extends ConsumerWidget {
                   onChanged: (val) {
                     ref
                         .read(transactionAlertsProvider.notifier)
-                        .setTransactionAlerts(val);
+                        .toggle();
                   },
                 ),
               ),
@@ -191,7 +191,7 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Icons.code,
                 iconColor: const Color(0xFFCC44FF),
                 title: 'Version',
-                subtitle: '1.0.0 — Build 1',
+                subtitle: '1.0.0 ï¿½ Build 1',
                 trailing: const SizedBox.shrink(),
               ),
             ],
@@ -253,7 +253,7 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
     if (confirmed == true) {
-      ref.read(transactionsProvider.notifier).clearAll();
+      ref.read(transactionProvider.notifier).clearAll();
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

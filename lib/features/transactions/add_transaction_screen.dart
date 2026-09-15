@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sidewallet/shared/models/wallet_model.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'transaction_provider.dart';
-import '../wallet/wallet_provider.dart';
-import '../../shared/models/transaction_model.dart';
+import 'package:sidewallet/features/transactions/transaction_provider.dart';
+import 'package:sidewallet/features/wallet/wallet_provider.dart';
+import 'package:sidewallet/shared/models/transaction_model.dart';
 
 // --- Category Model -----------------------------------------------------------
 class _CategoryItem {
@@ -123,7 +124,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     }
 
     final cat = _categories[_categoryIdx];
-    final tx = TransactionModel(
+    final tx = Transaction(
       id:         DateTime.now().millisecondsSinceEpoch.toString(),
       title:      _titleCtrl.text.trim(),
       amount:     amount,
@@ -483,7 +484,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
   }
 
   // -- Wallet Selector -------------------------------------------------------
-  Widget _buildWalletSelector(AsyncValue wallets) {
+  Widget _buildWalletSelector(List<Wallet> wallets) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -495,80 +496,93 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
               fontWeight: FontWeight.w600,
             )),
         const SizedBox(height: 12),
-        wallets.when(
-          loading: () => const Center(
-            child: CircularProgressIndicator(color: _cyan, strokeWidth: 2),
-          ),
-          error: (e, _) => Text('Error: $e', style: const TextStyle(color: _error)),
-          data: (list) {
-            if (list.isEmpty) {
+        Builder(builder: (context) {
+            if (wallets.isEmpty) {
               return Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: _darkCard,
+                  color: const Color(0xFF131929),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Text(
-                  'No wallets found. Create a wallet first.',
-                  style: TextStyle(color: Colors.white54),
-                  textAlign: TextAlign.center,
+                child: const Center(
+                  child: Text(
+                    'No wallets found.',
+                    style: TextStyle(color: Colors.white54),
+                  ),
                 ),
               );
             }
-            return SizedBox(
-              height: 64,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: list.length,
-                separatorBuilder: (_, __) => const SizedBox(width: 12),
-                itemBuilder: (_, i) {
-                  final w        = list[i];
-                  final selected = _selectedWalletId == w.id;
-                  return GestureDetector(
-                    onTap: () => setState(() => _selectedWalletId = w.id),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                      decoration: BoxDecoration(
-                        gradient: selected
-                            ? const LinearGradient(
-                                colors: [Color(0xFF00E5FF), Color(0xFFCC44FF)],
-                              )
-                            : null,
-                        color: selected ? null : _darkCard,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
-                          color: selected ? Colors.transparent : Colors.white12,
-                        ),
+            return ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: wallets.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              itemBuilder: (_, i) {
+                final w = wallets[i];
+                final isSelected = w.id == _selectedWalletId;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() => _selectedWalletId = w.id);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF131929),
+                      border: Border.all(
+                        color: isSelected ? const Color(0xFF00E5FF) : Colors.transparent,
+                        width: 2,
                       ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.account_balance_wallet_rounded,
-                              color: selected ? _darkBg : Colors.white54,
-                              size: 18),
-                          const SizedBox(width: 8),
-                          Text(
-                            w.name,
-                            style: TextStyle(
-                              color: selected ? _darkBg : Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                  );
-                },
-              ),
+                    child: Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF00E5FF).withOpacity(0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.account_balance_wallet,
+                              color: Color(0xFF00E5FF), size: 20),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                w.name,
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                '\ ',
+                                style: const TextStyle(
+                                  color: Colors.white54,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        if (isSelected)
+                          const Icon(Icons.check_circle,
+                              color: Color(0xFF00E5FF)),
+                      ],
+                    ),
+                  ),
+                );
+              },
             );
-          },
-        ),
+        }),
       ],
     );
   }
 
-  // -- Save Button -----------------------------------------------------------
   Widget _buildSaveButton() {
     return GestureDetector(
       onTap: _save,

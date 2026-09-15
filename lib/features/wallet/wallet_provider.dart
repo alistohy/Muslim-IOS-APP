@@ -1,8 +1,8 @@
-﻿import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../shared/models/wallet_model.dart';
+import 'package:sidewallet/shared/models/wallet_model.dart';
 
 const walletBoxName = 'wallets';
 const _uuid = Uuid();

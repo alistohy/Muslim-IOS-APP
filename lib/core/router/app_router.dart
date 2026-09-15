@@ -1,16 +1,16 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/splash_screen.dart';
-import '../../core/auth/biometric_auth_screen.dart';
-import '../../features/home/dashboard_screen.dart';
-import '../../features/wallet/wallet_screen.dart';
-import '../../features/transactions/transaction_history_screen.dart';
-import '../../features/charts/charts_screen.dart';
-import '../../features/settings/settings_screen.dart';
-import '../../features/transactions/add_transaction_screen.dart';
-import '../../shared/widgets/main_scaffold.dart';
+import 'package:sidewallet/features/home/splash_screen.dart';
+import 'package:sidewallet/core/auth/biometric_auth_screen.dart';
+import 'package:sidewallet/features/home/dashboard_screen.dart';
+import 'package:sidewallet/features/wallet/wallet_screen.dart';
+import 'package:sidewallet/features/transactions/transaction_history_screen.dart';
+import 'package:sidewallet/features/charts/charts_screen.dart';
+import 'package:sidewallet/features/settings/settings_screen.dart';
+import 'package:sidewallet/features/transactions/add_transaction_screen.dart';
+import 'package:sidewallet/shared/widgets/main_scaffold.dart';
 
 abstract class AppRoutes {
   static const splash        = '/splash';
