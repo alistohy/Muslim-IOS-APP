@@ -1,10 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../providers/transaction_provider.dart';
-import '../../models/transaction_model.dart';
+import 'transaction_provider.dart';
+import '../../shared/models/transaction_model.dart';
 
-// ─── Filter Enum ─────────────────────────────────────────────────────────────
+// --- Filter Enum -------------------------------------------------------------
 enum _Filter { all, income, expense, thisMonth, lastMonth }
 
 extension _FilterLabel on _Filter {
@@ -19,7 +19,7 @@ extension _FilterLabel on _Filter {
   }
 }
 
-// ─── Category Helpers ─────────────────────────────────────────────────────────
+// --- Category Helpers ---------------------------------------------------------
 IconData _categoryIcon(String cat) {
   switch (cat.toLowerCase()) {
     case 'food':          return Icons.restaurant_rounded;
@@ -44,7 +44,7 @@ Color _categoryColor(String cat) {
   }
 }
 
-// ─── Screen ───────────────────────────────────────────────────────────────────
+// --- Screen -------------------------------------------------------------------
 class TransactionHistoryScreen extends ConsumerStatefulWidget {
   const TransactionHistoryScreen({super.key});
 
@@ -72,7 +72,7 @@ class _TransactionHistoryScreenState
     super.dispose();
   }
 
-  // ── Filter + search logic ─────────────────────────────────────────────────
+  // -- Filter + search logic -------------------------------------------------
   List<TransactionModel> _applyFilters(List<TransactionModel> all) {
     final now   = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -101,7 +101,7 @@ class _TransactionHistoryScreenState
     return list;
   }
 
-  // ── Group by date ─────────────────────────────────────────────────────────
+  // -- Group by date ---------------------------------------------------------
   Map<String, List<TransactionModel>> _groupByDate(List<TransactionModel> list) {
     final now   = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
@@ -120,7 +120,7 @@ class _TransactionHistoryScreenState
     return groups;
   }
 
-  // ── Build ─────────────────────────────────────────────────────────────────
+  // -- Build -----------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     final txAsync = ref.watch(transactionProvider);
@@ -174,7 +174,7 @@ class _TransactionHistoryScreenState
     );
   }
 
-  // ── Search ────────────────────────────────────────────────────────────────
+  // -- Search ----------------------------------------------------------------
   Widget _buildSearchBar() {
     return Container(
       height: 48,
@@ -207,7 +207,7 @@ class _TransactionHistoryScreenState
     );
   }
 
-  // ── Filter Chips ──────────────────────────────────────────────────────────
+  // -- Filter Chips ----------------------------------------------------------
   Widget _buildFilterChips() {
     return SizedBox(
       height: 36,
@@ -250,7 +250,7 @@ class _TransactionHistoryScreenState
     );
   }
 
-  // ── Grouped List ──────────────────────────────────────────────────────────
+  // -- Grouped List ----------------------------------------------------------
   Widget _buildGroupedList(
       Map<String, List<TransactionModel>> groups,
       List<TransactionModel> allTx) {
@@ -301,7 +301,7 @@ class _TransactionHistoryScreenState
     );
   }
 
-  // ── Transaction Tile with Swipe-to-Dismiss ────────────────────────────────
+  // -- Transaction Tile with Swipe-to-Dismiss --------------------------------
   Widget _buildTransactionTile(
       TransactionModel t, List<TransactionModel> allTx) {
     return Padding(
@@ -434,7 +434,7 @@ class _TransactionHistoryScreenState
     );
   }
 
-  // ── Empty State ───────────────────────────────────────────────────────────
+  // -- Empty State -----------------------------------------------------------
   Widget _buildEmptyState() {
     return Center(
       child: Column(

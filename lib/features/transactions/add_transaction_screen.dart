@@ -1,12 +1,12 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import '../../providers/transaction_provider.dart';
-import '../../providers/wallet_provider.dart';
-import '../../models/transaction_model.dart';
+import 'transaction_provider.dart';
+import '../wallet/wallet_provider.dart';
+import '../../shared/models/transaction_model.dart';
 
-// ─── Category Model ───────────────────────────────────────────────────────────
+// --- Category Model -----------------------------------------------------------
 class _CategoryItem {
   final String label;
   final IconData icon;
@@ -24,7 +24,7 @@ const List<_CategoryItem> _categories = [
   _CategoryItem('Other',         Icons.category_rounded,        Color(0xFF9E9E9E)),
 ];
 
-// ─── Screen ───────────────────────────────────────────────────────────────────
+// --- Screen -------------------------------------------------------------------
 class AddTransactionScreen extends ConsumerStatefulWidget {
   const AddTransactionScreen({super.key});
 
@@ -51,7 +51,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
   late AnimationController _toggleAnim;
   late Animation<double>   _slideAnim;
 
-  // ── Colors ────────────────────────────────────────────────────────────────
+  // -- Colors ----------------------------------------------------------------
   static const _darkBg    = Color(0xFF0A0E1A);
   static const _darkCard  = Color(0xFF131929);
   static const _cyan      = Color(0xFF00E5FF);
@@ -80,7 +80,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     super.dispose();
   }
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
+  // -- Helpers ---------------------------------------------------------------
   void _setType(bool income) {
     if (_isIncome == income) return;
     setState(() => _isIncome = income);
@@ -153,7 +153,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     ));
   }
 
-  // ── Build ─────────────────────────────────────────────────────────────────
+  // -- Build -----------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
     final wallets = ref.watch(walletProvider);
@@ -206,7 +206,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Toggle Income / Expense ───────────────────────────────────────────────
+  // -- Toggle Income / Expense -----------------------------------------------
   Widget _buildToggleRow() {
     return Container(
       height: 52,
@@ -297,7 +297,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Amount ────────────────────────────────────────────────────────────────
+  // -- Amount ----------------------------------------------------------------
   Widget _buildAmountField() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -363,7 +363,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Title ─────────────────────────────────────────────────────────────────
+  // -- Title -----------------------------------------------------------------
   Widget _buildTitleField() {
     return _inputContainer(
       label: 'TITLE',
@@ -381,7 +381,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Category ──────────────────────────────────────────────────────────────
+  // -- Category --------------------------------------------------------------
   Widget _buildCategorySection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -443,7 +443,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Date ──────────────────────────────────────────────────────────────────
+  // -- Date ------------------------------------------------------------------
   Widget _buildDateField() {
     return GestureDetector(
       onTap: _pickDate,
@@ -463,7 +463,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Note ──────────────────────────────────────────────────────────────────
+  // -- Note ------------------------------------------------------------------
   Widget _buildNoteField() {
     return _inputContainer(
       label: 'NOTE (OPTIONAL)',
@@ -482,7 +482,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Wallet Selector ───────────────────────────────────────────────────────
+  // -- Wallet Selector -------------------------------------------------------
   Widget _buildWalletSelector(AsyncValue wallets) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -568,7 +568,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Save Button ───────────────────────────────────────────────────────────
+  // -- Save Button -----------------------------------------------------------
   Widget _buildSaveButton() {
     return GestureDetector(
       onTap: _save,
@@ -603,7 +603,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen>
     );
   }
 
-  // ── Input Container Helper ────────────────────────────────────────────────
+  // -- Input Container Helper ------------------------------------------------
   Widget _inputContainer({required String label, required Widget child}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),

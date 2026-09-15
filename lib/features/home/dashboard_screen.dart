@@ -1,10 +1,10 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/widgets/circuit_background.dart';
+import '../../shared/widgets/circuit_background.dart';
 import 'package:intl/intl.dart';
 
-// ─── Demo data models ────────────────────────────────────────────────────────
+// --- Demo data models --------------------------------------------------------
 
 enum TransactionType { income, expense }
 
@@ -84,7 +84,7 @@ final List<Transaction> _demoTransactions = [
   ),
 ];
 
-// ─── Dashboard Screen ─────────────────────────────────────────────────────────
+// --- Dashboard Screen ---------------------------------------------------------
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({super.key});
@@ -127,12 +127,12 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         child: SafeArea(
           child: CustomScrollView(
             slivers: [
-              // ── App Bar ──────────────────────────────────────────────────
+              // -- App Bar --------------------------------------------------
               SliverToBoxAdapter(
                 child: _buildAppBar(),
               ),
 
-              // ── Balance Card ─────────────────────────────────────────────
+              // -- Balance Card ---------------------------------------------
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -140,7 +140,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
               ),
 
-              // ── Quick Actions ────────────────────────────────────────────
+              // -- Quick Actions --------------------------------------------
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 24, 16, 0),
@@ -148,7 +148,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
               ),
 
-              // ── Recent Transactions Header ────────────────────────────────
+              // -- Recent Transactions Header --------------------------------
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(16, 28, 16, 12),
@@ -156,7 +156,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 ),
               ),
 
-              // ── Transaction List ─────────────────────────────────────────
+              // -- Transaction List -----------------------------------------
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -381,7 +381,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   child: Text(
                     _balanceVisible
                         ? _formatCurrency(_totalBalance)
-                        : 'EGP ••••••',
+                        : 'EGP ������',
                     key: ValueKey(_balanceVisible),
                     style: const TextStyle(
                       color: Colors.white,
@@ -578,7 +578,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 }
 
-// ─── Quick Action Model ───────────────────────────────────────────────────────
+// --- Quick Action Model -------------------------------------------------------
 
 class _QuickAction {
   final IconData icon;
@@ -592,7 +592,7 @@ class _QuickAction {
   });
 }
 
-// ─── Transaction Tile Widget ──────────────────────────────────────────────────
+// --- Transaction Tile Widget --------------------------------------------------
 
 class TransactionTile extends StatelessWidget {
   final Transaction transaction;

@@ -1,13 +1,13 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/providers/theme_provider.dart';
-import '../../../core/providers/currency_provider.dart';
-import '../../../core/providers/biometric_provider.dart';
-import '../../../core/providers/notifications_provider.dart';
-import '../../transactions/providers/transactions_provider.dart';
+import '../../core/theme/theme_provider.dart';
+import '../settings/settings_providers.dart';
+import '../settings/settings_providers.dart';
+import '../settings/settings_providers.dart';
+import '../transactions/transaction_provider.dart';
 
-// ─────────────────────────────────────────────────────────────────────────────
+// -----------------------------------------------------------------------------
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
@@ -37,7 +37,7 @@ class SettingsScreen extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // ── Appearance ──────────────────────────────────────────────────
+          // -- Appearance --------------------------------------------------
           _SettingsGroup(
             title: 'APPEARANCE',
             icon: Icons.palette_outlined,
@@ -83,7 +83,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // ── Security ────────────────────────────────────────────────────
+          // -- Security ----------------------------------------------------
           _SettingsGroup(
             title: 'SECURITY',
             icon: Icons.shield_outlined,
@@ -115,7 +115,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // ── Notifications ───────────────────────────────────────────────
+          // -- Notifications -----------------------------------------------
           _SettingsGroup(
             title: 'NOTIFICATIONS',
             icon: Icons.notifications_outlined,
@@ -154,7 +154,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // ── Data ────────────────────────────────────────────────────────
+          // -- Data --------------------------------------------------------
           _SettingsGroup(
             title: 'DATA',
             icon: Icons.storage_outlined,
@@ -181,7 +181,7 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 16),
 
-          // ── About ────────────────────────────────────────────────────────
+          // -- About --------------------------------------------------------
           _SettingsGroup(
             title: 'ABOUT',
             icon: Icons.info_outlined,
@@ -191,7 +191,7 @@ class SettingsScreen extends ConsumerWidget {
                 icon: Icons.code,
                 iconColor: const Color(0xFFCC44FF),
                 title: 'Version',
-                subtitle: '1.0.0 — Build 1',
+                subtitle: '1.0.0 � Build 1',
                 trailing: const SizedBox.shrink(),
               ),
             ],
@@ -266,7 +266,7 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
-// ── Settings Group Container ──────────────────────────────────────────────────
+// -- Settings Group Container --------------------------------------------------
 class _SettingsGroup extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -329,7 +329,7 @@ class _SettingsGroup extends StatelessWidget {
   }
 }
 
-// ── Settings Tile ─────────────────────────────────────────────────────────────
+// -- Settings Tile -------------------------------------------------------------
 class _SettingsTile extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
@@ -390,7 +390,7 @@ class _SettingsTile extends StatelessWidget {
   }
 }
 
-// ── About Tile ────────────────────────────────────────────────────────────────
+// -- About Tile ----------------------------------------------------------------
 class _AboutTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

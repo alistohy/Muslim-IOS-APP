@@ -1,8 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../core/models/transaction_model.dart';
+import '../models/transaction_model.dart';
 
-// ── Category meta ─────────────────────────────────────────────────────────────
+// -- Category meta -------------------------------------------------------------
 class _CatMeta {
   final String emoji;
   final Color color;
@@ -10,16 +10,16 @@ class _CatMeta {
 }
 
 const _catMeta = <String, _CatMeta>{
-  'food':          _CatMeta('🍕', Color(0xFFFF9800)),
-  'transport':     _CatMeta('🚗', Color(0xFF2196F3)),
-  'shopping':      _CatMeta('🛍️', Color(0xFFCC44FF)),
-  'health':        _CatMeta('❤️', Color(0xFFFF4466)),
-  'entertainment': _CatMeta('🎮', Color(0xFF00E5FF)),
-  'salary':        _CatMeta('💰', Color(0xFF00FF88)),
-  'other':         _CatMeta('📦', Color(0xFF9E9E9E)),
+  'food':          _CatMeta('??', Color(0xFFFF9800)),
+  'transport':     _CatMeta('??', Color(0xFF2196F3)),
+  'shopping':      _CatMeta('???', Color(0xFFCC44FF)),
+  'health':        _CatMeta('??', Color(0xFFFF4466)),
+  'entertainment': _CatMeta('??', Color(0xFF00E5FF)),
+  'salary':        _CatMeta('??', Color(0xFF00FF88)),
+  'other':         _CatMeta('??', Color(0xFF9E9E9E)),
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
+// -----------------------------------------------------------------------------
 /// Reusable transaction list tile.
 ///
 /// Usage:
@@ -42,7 +42,7 @@ class TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final meta = _catMeta[transaction.category] ??
-        const _CatMeta('📦', Color(0xFF9E9E9E));
+        const _CatMeta('??', Color(0xFF9E9E9E));
     final isIncome = transaction.type == TransactionType.income;
 
     return Container(
@@ -69,11 +69,11 @@ class TransactionTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             child: Row(
               children: [
-                // ── Category avatar ─────────────────────────────────────
+                // -- Category avatar -------------------------------------
                 _CategoryAvatar(meta: meta),
                 const SizedBox(width: 14),
 
-                // ── Title + date ────────────────────────────────────────
+                // -- Title + date ----------------------------------------
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +106,7 @@ class TransactionTile extends StatelessWidget {
                   ),
                 ),
 
-                // ── Amount ──────────────────────────────────────────────
+                // -- Amount ----------------------------------------------
                 _AmountBadge(
                   amount: transaction.amount,
                   isIncome: isIncome,
@@ -130,7 +130,7 @@ class TransactionTile extends StatelessWidget {
   }
 }
 
-// ── Category Avatar ───────────────────────────────────────────────────────────
+// -- Category Avatar -----------------------------------------------------------
 class _CategoryAvatar extends StatelessWidget {
   final _CatMeta meta;
   const _CategoryAvatar({required this.meta});
@@ -155,7 +155,7 @@ class _CategoryAvatar extends StatelessWidget {
   }
 }
 
-// ── Category chip ─────────────────────────────────────────────────────────────
+// -- Category chip -------------------------------------------------------------
 class _CategoryChip extends StatelessWidget {
   final _CatMeta meta;
   final String category;
@@ -184,7 +184,7 @@ class _CategoryChip extends StatelessWidget {
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 }
 
-// ── Amount Badge ──────────────────────────────────────────────────────────────
+// -- Amount Badge --------------------------------------------------------------
 class _AmountBadge extends StatelessWidget {
   final double amount;
   final bool isIncome;

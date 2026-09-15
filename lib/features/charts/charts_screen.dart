@@ -1,16 +1,16 @@
-﻿import 'package:fl_chart/fl_chart.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../transactions/providers/transactions_provider.dart';
-import '../../../core/models/transaction_model.dart';
+import '../../features/transactions/transaction_provider.dart';
+import '../../shared/models/transaction_model.dart';
 
-// ── Period enum ───────────────────────────────────────────────────────────────
+// -- Period enum ---------------------------------------------------------------
 enum _Period { week, month, year }
 
-// ── Provider for selected period ─────────────────────────────────────────────
+// -- Provider for selected period ---------------------------------------------
 final _periodProvider = StateProvider<_Period>((_) => _Period.month);
 
-// ── Category meta ─────────────────────────────────────────────────────────────
+// -- Category meta -------------------------------------------------------------
 const _categoryColors = {
   'food': Color(0xFFFF9800),
   'transport': Color(0xFF2196F3),
@@ -21,7 +21,7 @@ const _categoryColors = {
   'other': Color(0xFF9E9E9E),
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
+// -----------------------------------------------------------------------------
 class ChartsScreen extends ConsumerWidget {
   const ChartsScreen({super.key});
 
@@ -100,7 +100,7 @@ class ChartsScreen extends ConsumerWidget {
   }
 }
 
-// ── Period Selector ───────────────────────────────────────────────────────────
+// -- Period Selector -----------------------------------------------------------
 class _PeriodSelector extends StatelessWidget {
   final _Period period;
   final WidgetRef ref;
@@ -173,7 +173,7 @@ class _PeriodTab extends StatelessWidget {
   }
 }
 
-// ── Summary Cards ─────────────────────────────────────────────────────────────
+// -- Summary Cards -------------------------------------------------------------
 class _SummaryCards extends StatelessWidget {
   final List<TransactionModel> transactions;
   const _SummaryCards({required this.transactions});
@@ -277,7 +277,7 @@ class _SummaryCard extends StatelessWidget {
   }
 }
 
-// ── Donut Chart ───────────────────────────────────────────────────────────────
+// -- Donut Chart ---------------------------------------------------------------
 class _DonutChart extends StatefulWidget {
   final List<TransactionModel> transactions;
   const _DonutChart({required this.transactions});
@@ -390,7 +390,7 @@ class _DonutChartState extends State<_DonutChart> {
       s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 }
 
-// ── Income vs Expense Bar Chart ───────────────────────────────────────────────
+// -- Income vs Expense Bar Chart -----------------------------------------------
 class _IncomeExpenseBar extends StatelessWidget {
   final List<TransactionModel> transactions;
   final _Period period;
@@ -551,7 +551,7 @@ class _IncomeExpenseBar extends StatelessWidget {
   }
 }
 
-// ── Monthly Line Chart ────────────────────────────────────────────────────────
+// -- Monthly Line Chart --------------------------------------------------------
 class _MonthlyLineChart extends StatelessWidget {
   final List<TransactionModel> transactions;
   const _MonthlyLineChart({required this.transactions});
@@ -684,7 +684,7 @@ class _MonthlyLineChart extends StatelessWidget {
   }
 }
 
-// ── Empty State ───────────────────────────────────────────────────────────────
+// -- Empty State ---------------------------------------------------------------
 Widget _emptyState(String msg) => Container(
       height: 120,
       decoration: BoxDecoration(
