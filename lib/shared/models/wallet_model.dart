@@ -1,6 +1,5 @@
-﻿import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-part 'wallet_model.g.dart';
 
 @HiveType(typeId: 1)
 class Wallet extends HiveObject {

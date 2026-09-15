@@ -1,6 +1,5 @@
-﻿import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-part 'transaction_model.g.dart';
 
 @HiveType(typeId: 0)
 class Transaction extends HiveObject {
